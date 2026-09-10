@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>envmerge</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>
+/* Inlined env-merge UI. */
+</style>
+</head>
+<body>
+
+<!------------------------------------------------------------------>
+<!-- Begin inlined UI (originally in `env-merge (1).html`)            -->
+<!------------------------------------------------------------------>
+
+<style>
+/* --- full UI CSS copied from env-merge (1).html --- */
+:root{
+   --sys-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+   --mono-font: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+   --bg: #FFFFFF;
+   --bg-secondary: #F5F5F7;
+   --bg-tertiary: #EDEDF0;
+   --text: #1D1D1F;
+   --text-secondary: #6E6E73;
+   --text-tertiary: #A1A1A6;
+   --accent: #0066CC;
+   --accent-wash: rgba(0, 102, 204, 0.08);
+   --border: #D2D2D7;
+   --border-strong: #B8B8BD;
+   --danger: #D70015;
+
+   --col-a: #0066CC;
+   --col-b: #6E5AD6;
+   --col-c: #007A78;
+
+   --r-lg: 14px;
+   --r-md: 8px;
+   --r-sm: 6px;
+
+   --sp-1: 8px;
+   --sp-2: 16px;
+   --sp-3: 24px;
+   --sp-4: 32px;
+   --sp-5: 48px;
+
+   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+   --ease-flow: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { color-scheme: light; }
+
+/* Forced light mode: do not apply dark-mode overrides */
+
+*{box-sizing:border-box;}
+html,body{margin:0;height:100%;}
+body{
+   font-family:var(--sys-font);
+   color:var(--text);
+   background:var(--bg);
+   overflow:hidden;
+   -webkit-font-smoothing:antialiased;
+}
+
+.app{
+   height:100vh;display:flex;flex-direction:column;
+   padding: var(--sp-3) var(--sp-4) var(--sp-2);
+}
+
+/* topbar */
+.topbar{
+   display:flex;align-items:center;justify-content:space-between;
+   margin-bottom: var(--sp-3);
+   flex-shrink:0;
+   padding-bottom: var(--sp-2);
+   border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:var(--sp-1);} 
+.brand .marks{display:flex;gap:3px;} 
+.brand .marks span{width:6px;height:6px;border-radius:1.5px;display:inline-block;} 
+.brand .marks span:nth-child(1){background:var(--col-a);} 
+.brand .marks span:nth-child(2){background:var(--col-b);} 
+.brand .marks span:nth-child(3){background:var(--col-c);} 
+.brand .word{
+   font-weight:600;font-size:17px;letter-spacing:-0.01em;color:var(--text);
+}
+
+.top-actions{display:flex;align-items:center;gap:var(--sp-2);} 
+.filename-field{
+   display:flex;align-items:center;gap:6px;
+   background:var(--bg-secondary);border:1px solid var(--border);
+   border-radius:var(--r-md);padding:6px 10px;
+}
+.filename-field span.arrow{font-size:12px;color:var(--text-tertiary);} 
+.filename-field input{
+   border:none;background:transparent;outline:none;
+   font-family:var(--mono-font);font-size:12.5px;color:var(--text);width:110px;
+}
+
+.btn{
+   border:none;cursor:pointer;font-family:var(--sys-font);
+   font-weight:600;font-size:13px;
+   border-radius:var(--r-md);
+   padding:8px 16px;
+   transition:opacity .15s var(--ease), background-color .15s var(--ease);
+}
+.btn-primary{background:#000000;color:#FFFFFF;} 
+.btn-primary:hover:not(:disabled){opacity:0.8;} 
+.btn-primary:active:not(:disabled){opacity:0.65;} 
+.btn-primary:disabled{opacity:0.35;cursor:default;} 
+@media (prefers-color-scheme: dark){
+   .btn-primary{background:#FFFFFF;color:#000000;} }
+
+.btn-ghost{ background:var(--bg-secondary);color:var(--text); border:1px solid var(--border);} 
+.btn-ghost:hover{background:var(--bg-tertiary);} 
+.btn-ghost:active{opacity:0.7;} 
+
+.btn-solid{background:var(--accent);color:#FFFFFF;border:none;} 
+.btn-solid:hover{opacity:0.85;} 
+.btn-solid:active{opacity:0.7;} 
+
+/* board */
+.board{flex:1;display:flex;gap:var(--sp-2);min-height:0;} 
+.column{ flex:1;min-width:0;display:flex;flex-direction:column; background:var(--bg); border:none; /* remove visible borders from source buckets */ border-radius:var(--r-lg); overflow:hidden; position:relative; } 
+.column.add-slot{ flex:0.4;align-items:center;justify-content:center; cursor:pointer;border-style:dashed;background:transparent; transition:background-color .15s var(--ease), border-color .15s var(--ease); } 
+.column.add-slot:hover{background:var(--bg-secondary);border-color:var(--border-strong);} 
+.add-slot-icon{font-size:20px;color:var(--text-tertiary);font-weight:400;}
+
+.col-head{ padding: var(--sp-2); flex-shrink:0; display:flex;flex-direction:column;gap:var(--sp-1); border-bottom:1px solid var(--border); background:var(--bg-secondary); }
+.col-head-row{display:flex;align-items:center;justify-content:space-between;gap:8px;} 
+.col-title{ font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase; color:var(--text-secondary); cursor:pointer;display:flex;align-items:center;gap:8px;min-width:0; } 
+.col-title:hover{color:var(--text);} 
+.col-title .fname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px;} 
+.col-title .accent-bar{width:6px;height:6px;border-radius:1.5px;flex-shrink:0;} 
+.col-frac{font-family:var(--mono-font);font-size:11px;color:var(--text-tertiary);flex-shrink:0;} 
+.col-remove{ border:none;background:none;color:var(--text-tertiary);cursor:pointer;font-size:13px; opacity:0;transition:opacity .15s var(--ease);padding:2px 4px; } 
+.col-head:hover .col-remove{opacity:1;} 
+.col-remove:hover{color:var(--danger);} 
+
+.progress-track{height:3px;border-radius:2px;background:var(--bg-tertiary);overflow:hidden;} 
+.progress-fill{height:100%;background:var(--text);transition:width .3s var(--ease), background-color .2s;} 
+.progress-fill.done{background:var(--col-c);} 
+
+.col-body{flex:1;overflow-y:auto;padding: 4px var(--sp-1) var(--sp-2);} 
+.col-body::-webkit-scrollbar{width:8px;} 
+.col-body::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px;} 
+.col-body::-webkit-scrollbar-track{background:transparent;} 
+.col-body{scroll-behavior:smooth}
+
+.empty-state{ height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center; gap:10px;cursor:pointer;color:var(--text-tertiary); } 
+.empty-state .plus{ width:36px;height:36px;border-radius:var(--r-md); border:1px dashed var(--border-strong); display:flex;align-items:center;justify-content:center;font-size:16px; transition:background-color .15s var(--ease), color .15s var(--ease); } 
+.empty-state:hover .plus{background:var(--bg-secondary);color:var(--text-secondary);} 
+
+.row{ display:flex;align-items:center;gap:10px; padding:0  var(--sp-1);margin:0; /* remove per-row margins to keep consistent math */ border-radius:var(--r-sm); cursor:pointer;user-select:none; border-left:2px solid transparent; transition:background-color .32s var(--ease-flow), opacity .32s var(--ease-flow), border-color .32s var(--ease-flow), filter .32s var(--ease-flow), box-shadow .32s var(--ease-flow); background:transparent; height:56px; /* fixed row height to match master transform */ } 
+.row .dot{ width:6px;height:6px;border-radius:50%;flex-shrink:0; border:1.5px solid var(--border-strong);background:transparent; transition:background-color .15s, border-color .15s; } 
+.row .key{ font-family:var(--mono-font);font-size:13.5px;font-weight:600; overflow:hidden;text-overflow:ellipsis;white-space:nowrap; flex-shrink:0;max-width:46%;color:var(--text); } 
+.row .val{ font-family:var(--mono-font);font-size:13px;color:var(--text-secondary); overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:right; } 
+.row .val.placeholder{color:var(--text-tertiary);}  
+.row .edit-input{ flex:1;border:none;background:transparent;outline:none; font-family:var(--mono-font);font-size:14px;color:var(--text);text-align:right;padding:2px 6px; } 
+
+/* --- glass focus / match treatment, shared --- */
+.master-row.is-focus,
+.src-row.is-match{
+   position:relative;
+   background:rgba(255,255,255,0.55);
+   -webkit-backdrop-filter:blur(16px) saturate(180%);
+   backdrop-filter:blur(16px) saturate(180%);
+   box-shadow:0 6px 20px rgba(0,0,0,0.10), inset 0 0 0 1px rgba(255,255,255,0.6);
+}
+@media (prefers-color-scheme: dark){
+   .master-row.is-focus,
+   .src-row.is-match{
+      background:rgba(28,28,30,0.55);
+      box-shadow:0 6px 20px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.08);
+   }
+}
+.master-row.is-focus{ z-index:5; border-left-color:var(--accent); }
+.src-row.is-match{ z-index:3; border-left-color:var(--match-color, var(--accent)); }
+
+.master-row.is-dim,
+.src-row.is-dim{ opacity:0.4; filter:blur(1.1px); }
+
+.master-row:not(.is-dim):not(.is-focus):hover,
+.src-row:not(.is-dim):not(.is-match):hover{ background:var(--bg-secondary); }
+
+/* --- master picker: fixed center slot, list scrolls around it --- */
+.master-viewport{ flex:1; position:relative; overflow:hidden; -webkit-mask-image:linear-gradient(to bottom, transparent, black 10%, black 90%, transparent); mask-image:linear-gradient(to bottom, transparent, black 10%, black 90%, transparent); }
+.master-viewport::before,
+.master-viewport::after{ content:''; position:absolute; left:12px; right:12px; height:1px; background:var(--border); z-index:2; pointer-events:none; }
+.master-viewport::before{ top:calc(50% - 20px); }
+.master-viewport::after{ top:calc(50% + 20px); }
+.master-track{ position:absolute; left:4px; right:4px; top:0; transition:transform .42s var(--ease-flow); will-change:transform; }
+.master-row{ box-sizing:border-box; }
+
+/* Ensure source rows match the master row height exactly so the
+    master-column transform lines up with the source columns. */
+.src-row{ height:56px; box-sizing:border-box; }
+
+/* provenance dot colors */
+.dot.from-A{background:var(--col-a);border-color:var(--col-a);} 
+.dot.from-B{background:var(--col-b);border-color:var(--col-b);} 
+.dot.from-C{background:var(--col-c);border-color:var(--col-c);} 
+.dot.from-manual{background:var(--text);border-color:var(--text);} 
+
+.accent-A{background:var(--col-a);} 
+.accent-B{background:var(--col-b);} 
+.accent-C{background:var(--col-c);} 
+
+/* hint bar */
+.hint-bar{ flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:8px; padding: var(--sp-2) 0 0; } 
+.chip{ font-family:var(--mono-font);font-size:11px;color:var(--text-secondary); background:var(--bg-secondary);border:1px solid var(--border); border-radius:var(--r-sm);padding:4px 9px; } 
+.chip-sep{width:3px;height:3px;border-radius:50%;background:var(--text-tertiary);}
+
+/* modal */
+.modal-layer{ position:fixed;inset:0;z-index:50;display:none; align-items:center;justify-content:center; background:rgba(0,0,0,0.35); } 
+.modal-layer.open{display:flex;} 
+.modal-card{ width:560px;max-width:90vw; background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); box-shadow:0 4px 24px rgba(0,0,0,0.12); padding: var(--sp-3); } 
+.modal-title{ font-weight:600;font-size:13px;margin-bottom:var(--sp-2); display:flex;align-items:center;gap:8px; color:var(--text-secondary); letter-spacing:0.04em;text-transform:uppercase; } 
+.modal-card textarea{ width:100%;height:220px;resize:vertical; border:1px solid var(--border);border-radius:var(--r-md); padding: var(--sp-1) 12px;font-family:var(--mono-font);font-size:12px; background:var(--bg-secondary);outline:none;color:var(--text); transition:border-color .15s var(--ease); } 
+.modal-card textarea:focus{border-color:var(--accent);} 
+.modal-actions{display:flex;justify-content:space-between;align-items:center;margin-top:var(--sp-2);} 
+.modal-actions .left{display:flex;gap:8px;} 
+input[type=file]{display:none;} 
+
+@keyframes shake{ 0%,100%{transform:translateX(0);} 30%{transform:translateX(-3px);} 70%{transform:translateX(3px);} } 
+.shake{animation:shake .2s linear;} 
+
+@media (max-width: 860px){ .board{overflow-x:auto;} .column{min-width:240px;} }
+</style>
+
+<div class="app">
+   <div class="topbar">
+      <div class="brand">
+         <span class="marks"><span></span><span></span><span></span></span>
+         <span class="word">envmerge</span>
+      </div>
+      <div class="top-actions">
+         <div class="filename-field">
+            <span class="arrow">→</span>
+            <input id="filenameInput" type="text" value=".env" spellcheck="false">
+         </div>
+         <button class="btn btn-primary" id="exportBtn" disabled title="Export merged file">Export</button>
+      </div>
+   </div>
+
+   <div class="board" id="board"></div>
+
+   <div class="hint-bar" id="hintBar" style="visibility:hidden;">
+      <span class="chip" title="Move focus">↑ ↓</span>
+      <span class="chip-sep"></span>
+      <span class="chip" title="Pull value from that source">1 · 2 · 3</span>
+      <span class="chip-sep"></span>
+      <span class="chip" title="Type a value manually">↵ edit</span>
+      <span class="chip-sep"></span>
+      <span class="chip" title="Clear this field">⌫ clear</span>
+   </div>
+</div>
+
+<div class="modal-layer" id="modalLayer">
+   <div class="modal-card">
+      <div class="modal-title" id="modalTitle">add file</div>
+      <textarea id="modalTextarea" placeholder="paste .env contents here…" spellcheck="false"></textarea>
+      <div class="modal-actions">
+         <div class="left">
+            <button class="btn btn-ghost" id="uploadBtn">Upload File…</button>
+            <input type="file" id="fileInput" accept=".env,text/plain,.example">
+         </div>
+         <div class="left">
+            <button class="btn btn-ghost" id="cancelModalBtn">Cancel</button>
+            <button class="btn btn-solid" id="confirmModalBtn">Use This</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+/* Inlined UI JavaScript (from env-merge (1).html) */
+(function(){
+   const COL_LETTERS = ['A','B','C'];
+   const COL_COLORS = {A:'var(--col-a)', B:'var(--col-b)', C:'var(--col-c)'};
+
+   const state = {
+      template: null,
+      sources: [ {loaded:false, name:'', map:{}, rawText:''}, {loaded:false, name:'', map:{}, rawText:''} ],
+      maxSources: 3,
+      resolved: {},
+      focusIndex: 0,
+      editing: false,
+      modalTarget: null
+   };
+
+   const board = document.getElementById('board');
+   const hintBar = document.getElementById('hintBar');
+   const exportBtn = document.getElementById('exportBtn');
+   const filenameInput = document.getElementById('filenameInput');
+   const modalLayer = document.getElementById('modalLayer');
+   const modalTitle = document.getElementById('modalTitle');
+   const modalTextarea = document.getElementById('modalTextarea');
+   const fileInput = document.getElementById('fileInput');
+
+   function escapeHtml(str){ if(str === undefined || str === null) return ''; return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+   function escapeAttr(str){ if(str === undefined || str === null) return ''; return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+   function parseAssignmentLine(line){ const trimmed = line.trim(); if(!trimmed || trimmed.startsWith('#')) return null; const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/); if(!m) return null; return {key:m[1], value:m[2]}; }
+   function parseTemplate(text){ const lines = text.split(/\r?\n/); const fields = []; lines.forEach((line, i) => { const parsed = parseAssignmentLine(line); if(parsed) fields.push({key:parsed.key, defaultValue:parsed.value, lineIndex:i}); }); return {lines, fields, rawText:text}; }
+   function parseSource(text){ const map = {}; text.split(/\r?\n/).forEach(line => { const parsed = parseAssignmentLine(line); if(parsed) map[parsed.key] = parsed.value; }); return map; }
+
+   function fieldCount(){ return state.template ? state.template.fields.length : 0; }
+   function resolvedCount(){ if(!state.template) return 0; return state.template.fields.filter(f => state.resolved[f.key]).length; }
+   function currentField(){ if(!state.template) return null; return state.template.fields[state.focusIndex] || null; }
+
+   function advanceToNextUnresolved(){ if(!state.template) return; const n = state.template.fields.length; for(let step = 1; step <= n; step++){ const idx = (state.focusIndex + step) % n; const f = state.template.fields[idx]; if(!state.resolved[f.key]){ state.focusIndex = idx; return; } } }
+
+   function moveFocus(delta){ if(!state.template) return; const n = state.template.fields.length; state.focusIndex = Math.max(0, Math.min(n-1, state.focusIndex + delta)); render(); scrollFocusedIntoView(); }
+
+   const ROW_HEIGHT = 56; // must match .master-row height in CSS
+
+   function smoothScrollTo(el, target, duration = 420) { const start = el.scrollTop; const change = target - start; const startTime = performance.now(); function ease(t) { return 1 - Math.pow(1 - t, 3); } function animate(now) { const elapsed = now - startTime; const t = Math.min(1, elapsed / duration); el.scrollTop = start + change * ease(t); if (t < 1) requestAnimationFrame(animate); } requestAnimationFrame(animate); }
+
+   function applyMasterTransform(){ const viewport = document.getElementById('masterViewport'); const track = document.getElementById('masterTrack'); if(!viewport || !track) return; const centerY = viewport.clientHeight / 2; const targetY = centerY - (state.focusIndex * ROW_HEIGHT + ROW_HEIGHT / 2); track.style.transform = `translateY(${targetY}px)`; }
+
+   function scrollFocusedIntoView(){ requestAnimationFrame(() => { applyMasterTransform(); const matchEl = document.querySelector('.src-row.is-match'); if (matchEl) { const parent = matchEl.closest('.col-body'); if (parent) { const rowTop = matchEl.offsetTop; const rowHeight = matchEl.offsetHeight; const target = Math.max(0, rowTop - (parent.clientHeight / 2) + (rowHeight / 2)); smoothScrollTo(parent, target, 420); } } }); }
+
+   window.addEventListener('resize', applyMasterTransform);
+
+   function assignFromSource(colIdx){ const src = state.sources[colIdx]; const field = currentField(); if(!field) return; if(!src || !src.loaded || !(field.key in src.map)){ shakeColumn(colIdx); return; } state.resolved[field.key] = {value: src.map[field.key], source: COL_LETTERS[colIdx]}; advanceToNextUnresolved(); render(); scrollFocusedIntoView(); }
+   function clearFocused(){ const field = currentField(); if(!field) return; delete state.resolved[field.key]; render(); }
+   function shakeColumn(colIdx){ const col = board.querySelector(`.column[data-source-idx="${colIdx}"]`); if(!col) return; col.classList.remove('shake'); void col.offsetWidth; col.classList.add('shake'); }
+   function startEdit(){ if(!currentField()) return; state.editing = true; render(); requestAnimationFrame(() => { const input = document.getElementById('activeEditInput'); if(input){ input.focus(); input.select(); } }); }
+   function commitEdit(value){ const field = currentField(); if(!field) return; if(value.trim() === ''){ delete state.resolved[field.key]; } else { state.resolved[field.key] = {value, source:'manual'}; } state.editing = false; advanceToNextUnresolved(); render(); scrollFocusedIntoView(); }
+   function cancelEdit(){ state.editing = false; render(); }
+
+   function render(){ renderBoard(); renderTopControls(); hintBar.style.visibility = state.template ? 'visible' : 'hidden'; requestAnimationFrame(applyMasterTransform); }
+   function renderTopControls(){ const has = !!state.template; exportBtn.disabled = !has; }
+   function renderBoard(){ board.innerHTML = ''; board.appendChild(buildMasterColumn()); state.sources.forEach((src, idx) => { board.appendChild(buildSourceColumn(src, idx)); }); if(state.sources.length < state.maxSources){ board.appendChild(buildAddSlot()); } }
+
+   function buildMasterColumn(){ const col = document.createElement('div'); col.className = 'column'; const head = document.createElement('div'); head.className = 'col-head'; if(!state.template){ head.innerHTML = `\n        <div class="col-head-row">\n          <div class="col-title" id="templateTitleEmpty">\n            <span class="fname" style="color:var(--text-tertiary);">Template</span>\n          </div>\n        </div>`; col.appendChild(head); const body = document.createElement('div'); body.className = 'col-body'; body.appendChild(buildEmptyState('template')); col.appendChild(body); head.querySelector('#templateTitleEmpty').addEventListener('click', () => openModal('template')); return col; }
+      const rc = resolvedCount(), fc = fieldCount(); const pct = fc ? Math.round((rc/fc)*100) : 0; head.innerHTML = `\n      <div class="col-head-row">\n        <div class="col-title" id="templateTitle"><span class="fname">${escapeHtml(state.template.name || '.env.example')}</span></div>\n        <span class="col-frac">${rc}/${fc}</span>\n      </div>\n      <div class="progress-track"><div class="progress-fill ${pct===100?'done':''}" style="width:${pct}%"></div></div>\n    `; head.querySelector('#templateTitle').addEventListener('click', () => openModal('template')); col.appendChild(head); const viewport = document.createElement('div'); viewport.className = 'master-viewport'; viewport.id = 'masterViewport'; const track = document.createElement('div'); track.className = 'master-track'; track.id = 'masterTrack'; state.template.fields.forEach((f, idx) => { track.appendChild(buildMasterRow(f, idx)); }); viewport.appendChild(track); col.appendChild(viewport); return col; }
+
+   function buildMasterRow(f, idx){ const row = document.createElement('div'); const isFocus = idx === state.focusIndex; row.className = 'row master-row ' + (isFocus ? 'is-focus' : 'is-dim'); row.dataset.key = f.key; const res = state.resolved[f.key]; const dotClass = res ? `from-${res.source}` : ''; if(isFocus && state.editing){ row.innerHTML = `\n        <span class="dot ${dotClass}"></span>\n        <span class="key">${escapeHtml(f.key)}</span>\n        <input id="activeEditInput" class="edit-input" value="${escapeAttr(res ? res.value : '')}" placeholder="${escapeAttr(f.defaultValue || 'type a value')}" spellcheck="false">\n      `; } else { const displayVal = res ? res.value : (f.defaultValue || ''); const isPlaceholder = !res; row.innerHTML = `\n        <span class="dot ${dotClass}"></span>\n        <span class="key">${escapeHtml(f.key)}</span>\n        <span class="val ${isPlaceholder?'placeholder':''}">${escapeHtml(displayVal) || '—'}</span>\n      `; }
+      row.addEventListener('click', () => { if(state.focusIndex !== idx){ state.focusIndex = idx; state.editing = false; render(); } }); if(isFocus && state.editing){ requestAnimationFrame(() => { const input = row.querySelector('#activeEditInput'); if(!input) return; input.addEventListener('keydown', (e) => { if(e.key === 'Enter'){ e.preventDefault(); commitEdit(input.value); } else if(e.key === 'Escape'){ e.preventDefault(); cancelEdit(); } e.stopPropagation(); }); input.addEventListener('click', e => e.stopPropagation()); }); }
+      return row; }
+
+   function buildSourceColumn(src, idx){ const col = document.createElement('div'); col.className = 'column'; col.dataset.sourceIdx = idx; const letter = COL_LETTERS[idx]; const color = COL_COLORS[letter]; const head = document.createElement('div'); head.className = 'col-head'; if(!src.loaded){ head.innerHTML = `\n        <div class="col-head-row">\n          <div class="col-title" id="srcTitleEmpty${idx}">\n            <span class="accent-bar accent-${letter}"></span>\n            <span class="fname" style="color:var(--text-tertiary);">Source ${letter}</span>\n          </div>\n          ${state.sources.length > 2 ? `<button class="col-remove" id="srcRemove${idx}" title="remove column">✕</button>` : ''}\n        </div>`; col.appendChild(head); const body = document.createElement('div'); body.className = 'col-body'; body.appendChild(buildEmptyState({source: idx})); col.appendChild(body); head.querySelector(`#srcTitleEmpty${idx}`).addEventListener('click', () => openModal({source: idx})); const rm = head.querySelector(`#srcRemove${idx}`); if(rm) rm.addEventListener('click', (e) => { e.stopPropagation(); removeSource(idx); }); return col; }
+      const keyCount = Object.keys(src.map).length; head.innerHTML = `\n      <div class="col-head-row">\n        <div class="col-title" id="srcTitle${idx}">\n          <span class="accent-bar accent-${letter}"></span>\n          <span class="fname">${escapeHtml(src.name || 'Source ' + letter)}</span>\n        </div>\n        <button class="col-remove" id="srcRemove${idx}" title="remove column">✕</button>\n      </div>\n      <span class="col-frac" style="align-self:flex-start;">${keyCount} keys</span>\n    `; head.querySelector(`#srcTitle${idx}`).addEventListener('click', () => openModal({source: idx})); head.querySelector(`#srcRemove${idx}`).addEventListener('click', (e) => { e.stopPropagation(); removeSource(idx); }); col.appendChild(head);
+      const body = document.createElement('div'); body.className = 'col-body'; const focused = currentField(); Object.keys(src.map).forEach(key => { body.appendChild(buildSourceRow(key, src.map[key], idx, focused, color)); }); col.appendChild(body); return col; }
+
+   function buildSourceRow(key, value, colIdx, focusedField, color){ const row = document.createElement('div'); const isMatch = focusedField && focusedField.key === key; row.className = 'row src-row ' + (isMatch ? 'is-match' : (focusedField ? 'is-dim' : '')); if(isMatch) row.style.setProperty('--match-color', color); row.innerHTML = `\n      <span class="key">${escapeHtml(key)}</span>\n      <span class="val">${escapeHtml(value) || '—'}</span>\n    `; row.addEventListener('click', () => { if(!currentField()) return; const field = currentField(); state.resolved[field.key] = {value, source: COL_LETTERS[colIdx]}; advanceToNextUnresolved(); render(); scrollFocusedIntoView(); }); return row; }
+
+   function buildEmptyState(target){ const wrap = document.createElement('div'); wrap.className = 'empty-state'; wrap.innerHTML = `<div class="plus">+</div>`; wrap.addEventListener('click', () => openModal(target)); return wrap; }
+   function buildAddSlot(){ const col = document.createElement('div'); col.className = 'column add-slot'; col.innerHTML = `<span class="add-slot-icon">+</span>`; col.addEventListener('click', () => { state.sources.push({loaded:false, name:'', map:{}, rawText:''}); render(); }); return col; }
+   function removeSource(idx){ if(state.sources.length <= 2) return; state.sources.splice(idx, 1); render(); }
+
+   function openModal(target){ state.modalTarget = target; if(target === 'template'){ modalTitle.textContent = 'Add .env.example'; modalTextarea.value = state.template ? state.template.rawText : ''; } else { const s = state.sources[target.source]; modalTitle.textContent = 'Add Source File'; modalTextarea.value = s.rawText || ''; } modalLayer.classList.add('open'); requestAnimationFrame(() => modalTextarea.focus()); }
+   function closeModal(){ modalLayer.classList.remove('open'); state.modalTarget = null; fileInput.value = ''; }
+   function confirmModal(){ const text = modalTextarea.value; if(state.modalTarget === 'template'){ const prevName = state.template?.name; state.template = Object.assign(parseTemplate(text), { name: state.pendingTemplateName || prevName || '.env.example' }); state.pendingTemplateName = null; const prevFocus = state.focusIndex; state.focusIndex = Math.min(prevFocus, Math.max(0, state.template.fields.length - 1)); state.editing = false; } else if(state.modalTarget && 'source' in state.modalTarget){ const idx = state.modalTarget.source; state.sources[idx] = { loaded: text.trim().length > 0, name: state.sources[idx].name || ('Source ' + COL_LETTERS[idx]), map: parseSource(text), rawText: text }; } closeModal(); render(); }
+
+   document.getElementById('cancelModalBtn').addEventListener('click', closeModal); document.getElementById('confirmModalBtn').addEventListener('click', confirmModal); modalLayer.addEventListener('click', (e) => { if(e.target === modalLayer) closeModal(); }); document.getElementById('uploadBtn').addEventListener('click', () => fileInput.click()); fileInput.addEventListener('change', () => { const file = fileInput.files[0]; if(!file) return; const reader = new FileReader(); reader.onload = () => { modalTextarea.value = reader.result; if(state.modalTarget === 'template'){ state.pendingTemplateName = file.name; } else if(state.modalTarget && 'source' in state.modalTarget){ state.sources[state.modalTarget.source].name = file.name; } }; reader.readAsText(file); });
+
+   function buildExportText(){ if(!state.template) return ''; const out = state.template.lines.slice(); state.template.fields.forEach(f => { const r = state.resolved[f.key]; if(r) out[f.lineIndex] = `${f.key}=${r.value}`; }); return out.join('\n'); }
+
+   exportBtn.addEventListener('click', () => { if(!state.template) return; const text = buildExportText(); const blob = new Blob([text], {type:'text/plain'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filenameInput.value.trim() || '.env'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); });
+
+   document.addEventListener('keydown', (e) => { const activeTag = document.activeElement.tagName; const inTextInput = activeTag === 'INPUT' || activeTag === 'TEXTAREA'; if(modalLayer.classList.contains('open')){ if(e.key === 'Escape'){ closeModal(); } return; } if(state.editing && inTextInput) return; if(inTextInput) return; if(!state.template) return; if(e.key === 'ArrowDown' || e.key === 'j'){ e.preventDefault(); moveFocus(1); } else if(e.key === 'ArrowUp' || e.key === 'k'){ e.preventDefault(); moveFocus(-1); } else if(e.key === '1'){ assignFromSource(0); } else if(e.key === '2'){ assignFromSource(1); } else if(e.key === '3'){ assignFromSource(2); } else if(e.key === 'Enter'){ e.preventDefault(); startEdit(); } else if(e.key === 'Backspace' || e.key === 'Delete'){ e.preventDefault(); clearFocused(); } else if(e.key === 'Escape'){ if(state.editing) cancelEdit(); } });
+
+   render();
+})();
+</script>
+
+<!------------------------------------------------------------------>
+<!-- End inlined UI                                                 -->
+<!------------------------------------------------------------------>
+
+</body>
+</html>
