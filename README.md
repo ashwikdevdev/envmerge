@@ -3,7 +3,7 @@
 Small, local web UI to build a new `.env` from a `.env.example` and one or
 more older `.env` files. The app helps you skim template fields, shows matches
 from older files, and lets you pick values with keyboard shortcuts or type
-manual values.
+manual values. All the data remains in a local browser session so none of your sensitive information and secrets are exposed to either me or the internet. Never input secrets and .env secrets in any internet field. Go DevOps!
 
 Features
 - Load a `.env.example` (template) that declares keys and default values.
