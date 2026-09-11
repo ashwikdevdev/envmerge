@@ -62,11 +62,7 @@ Assets / attribution
 - Favicon: `assets/favicon.svg` (original icon attribution: Process icons by
   orvipixel — Flaticon — https://www.flaticon.com/free-icons/process)
 
-License
-- MIT-style (add your preferred license file if you want to publish).
 
-If you'd like, I can start implementing the keyboard mapping changes now or
-scaffold session persistence — tell me which next item to work on.
 # envmerge Project
 
 This is a small wrapper project containing a copy of the env-merge UI.
