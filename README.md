@@ -1,4 +1,4 @@
-## envmerge — merge .env files interactively
+## envmerge | environment variable management tool | merge .env files interactively
 
 Small, local web UI to build a new `.env` from a `.env.example` and one or
 more older `.env` files. The app helps you skim template fields, shows matches
